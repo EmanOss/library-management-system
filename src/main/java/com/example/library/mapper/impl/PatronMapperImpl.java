@@ -16,12 +16,12 @@ public class PatronMapperImpl implements Mapper<Patron, PatronDto> {
     }
 
     @Override
-    public PatronDto mapTo(Patron patron) {
+    public PatronDto mapToDto(Patron patron) {
         return modelMapper.map(patron, PatronDto.class);
     }
 
     @Override
-    public Patron mapFrom(PatronDto patronDto) {
+    public Patron mapFromDto(PatronDto patronDto) {
         return modelMapper.map(patronDto, Patron.class);
     }
 }
