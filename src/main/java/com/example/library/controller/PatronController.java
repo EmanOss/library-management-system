@@ -34,9 +34,9 @@ public class PatronController {
     }
     @PostMapping("/patrons")
     public ResponseEntity<PatronDto> addPatron(@RequestBody PatronDto patronDto) {
-        Patron patron = this.patronMapper.mapFrom(patronDto);
+        Patron patron = this.patronMapper.mapFromDto(patronDto);
         Patron savedPatron = this.patronService.save(patron);
-        return new ResponseEntity<>(this.patronMapper.mapTo(savedPatron), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.patronMapper.mapToDto(savedPatron), HttpStatus.CREATED);
     }
     @PutMapping("/patrons/{id}")
     public ResponseEntity<PatronDto> updatePatron(@PathVariable Long id, @RequestBody PatronDto patronDto) {
@@ -44,9 +44,9 @@ public class PatronController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         patronDto.setId(id);
-        Patron patron = this.patronMapper.mapFrom(patronDto);
+        Patron patron = this.patronMapper.mapFromDto(patronDto);
         Patron updatedPatron = this.patronService.save(patron);
-        return new ResponseEntity<>(this.patronMapper.mapTo(updatedPatron), HttpStatus.OK);
+        return new ResponseEntity<>(this.patronMapper.mapToDto(updatedPatron), HttpStatus.OK);
     }
     @DeleteMapping("/patrons/{id}")
     public ResponseEntity<Void> deletePatron(@PathVariable Long id) {

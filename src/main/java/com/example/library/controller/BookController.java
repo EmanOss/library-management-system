@@ -22,17 +22,20 @@ public class BookController {
     }
     @GetMapping("/books")
     public ResponseEntity<List<Book>> getBooks() {
-        return new ResponseEntity<>(this.bookService.getAllBooks(), HttpStatus.OK);
+        return new ResponseEntity<>(this.bookService.getAll(), HttpStatus.OK);
     }
     @GetMapping("/books/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
-        return new ResponseEntity<>(this.bookService.getBookById(id), HttpStatus.OK);
+        if(!this.bookService.isExists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(this.bookService.getById(id), HttpStatus.OK);
     }
     @PostMapping("/books")
     public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto) {
-        Book book = this.bookMapper.mapFrom(bookDto);
-        Book savedBook = this.bookService.saveBook(book);
-        return new ResponseEntity<>(this.bookMapper.mapTo(savedBook), HttpStatus.CREATED);
+        Book book = this.bookMapper.mapFromDto(bookDto);
+        Book savedBook = this.bookService.save(book);
+        return new ResponseEntity<>(this.bookMapper.mapToDto(savedBook), HttpStatus.CREATED);
     }
     @PutMapping("/books/{id}")
     public ResponseEntity<BookDto> updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
@@ -40,8 +43,8 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         bookDto.setId(id);
-        Book book = this.bookMapper.mapFrom(bookDto);
-        Book updatedBook = this.bookService.saveBook(book);
-        return new ResponseEntity<>(this.bookMapper.mapTo(updatedBook), HttpStatus.OK);
+        Book book = this.bookMapper.mapFromDto(bookDto);
+        Book updatedBook = this.bookService.save(book);
+        return new ResponseEntity<>(this.bookMapper.mapToDto(updatedBook), HttpStatus.OK);
     }
 }

@@ -17,22 +17,22 @@ public class BookServiceImpl implements BookService {
         this.bookRepository = bookRepository;
     }
     @Override
-    public Book getBookById(Long id) {
+    public Book getById(Long id) {
         return this.bookRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<Book> getAllBooks() {
+    public List<Book> getAll() {
         return this.bookRepository.findAll();
     }
 
     @Override
-    public Book saveBook(Book book) {
+    public Book save(Book book) {
         return this.bookRepository.save(book);
     }
 
     @Override
-    public void deleteBook(Long id) {
+    public void delete(Long id) {
         this.bookRepository.deleteById(id);
     }
 

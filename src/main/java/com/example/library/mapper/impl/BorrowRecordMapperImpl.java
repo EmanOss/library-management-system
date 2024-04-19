@@ -17,12 +17,12 @@ public class BorrowRecordMapperImpl implements Mapper<BorrowRecord, BorrowRecord
     }
 
     @Override
-    public BorrowRecordDto mapTo (BorrowRecord patron){
+    public BorrowRecordDto mapToDto(BorrowRecord patron){
         return modelMapper.map(patron, BorrowRecordDto.class);
     }
 
     @Override
-    public BorrowRecord mapFrom (BorrowRecordDto patronDto){
+    public BorrowRecord mapFromDto(BorrowRecordDto patronDto){
         return modelMapper.map(patronDto, BorrowRecord.class);
     }
 }
