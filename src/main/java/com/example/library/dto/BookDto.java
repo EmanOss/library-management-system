@@ -1,28 +1,23 @@
-package com.example.library.model;
+package com.example.library.dto;
 
-import jakarta.persistence.*;
+import com.example.library.model.BorrowRecord;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-@Entity
-public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class BookDto {
     private Long id;
     private String title;
     private String author;
     private int publicationYear;
     private String isbn;
-    @OneToMany(mappedBy = "book")
     private Set<BorrowRecord> bookPatrons = new HashSet<>();
 }

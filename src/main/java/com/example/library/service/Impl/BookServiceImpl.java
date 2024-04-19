@@ -1,5 +1,6 @@
 package com.example.library.service.Impl;
 
+import com.example.library.dto.BookDto;
 import com.example.library.model.Book;
 import com.example.library.repository.BookRepository;
 import com.example.library.service.BookService;
@@ -26,31 +27,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book updateBook(Long id, String title, String author, int publicationYear, String ISBN) {
-        Book book = this.bookRepository.findById(id).orElse(null);
-        if (book == null) {
-            return null;
-        }
-        book.setTitle(title);
-        book.setAuthor(author);
-        book.setPublicationYear(publicationYear);
-        book.setISBN(ISBN);
-        return this.bookRepository.save(book);
-    }
-
-    @Override
-    public Book addBook(String title, String author, int publicationYear, String ISBN) {
-        Book book = Book.builder()
-                .title(title)
-                .author(author)
-                .publicationYear(publicationYear)
-                .ISBN(ISBN)
-                .build();
+    public Book saveBook(Book book) {
         return this.bookRepository.save(book);
     }
 
     @Override
     public void deleteBook(Long id) {
         this.bookRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isExists(Long id) {
+        return this.bookRepository.existsById(id);
     }
 }
