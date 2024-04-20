@@ -4,6 +4,7 @@ import com.example.library.dto.PatronDto;
 import com.example.library.mapper.Mapper;
 import com.example.library.model.Patron;
 import com.example.library.service.PatronService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +35,13 @@ public class PatronController {
         return new ResponseEntity<>(this.patronService.getById(id), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<PatronDto> addPatron(@RequestBody PatronDto patronDto) {
+    public ResponseEntity<PatronDto> addPatron(@Valid @RequestBody PatronDto patronDto) {
         Patron patron = this.patronMapper.mapFromDto(patronDto);
         Patron savedPatron = this.patronService.save(patron);
         return new ResponseEntity<>(this.patronMapper.mapToDto(savedPatron), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<PatronDto> updatePatron(@PathVariable Long id, @RequestBody PatronDto patronDto) {
+    public ResponseEntity<PatronDto> updatePatron(@PathVariable Long id, @Valid @RequestBody PatronDto patronDto) {
         if(!this.patronService.isExists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
