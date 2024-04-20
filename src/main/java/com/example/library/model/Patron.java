@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -20,6 +19,7 @@ public class Patron {
     private String name;
     private String email;
     private String phone;
-    @OneToMany(mappedBy = "patron")
-    private Set<BorrowRecord> bookPatrons = new HashSet<>();
+    private boolean canBorrow;
+    @ElementCollection
+    private Set<Long> borrowRecordsIds = new HashSet<>();
 }
