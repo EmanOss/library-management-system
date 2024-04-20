@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/patrons")
 public class PatronController {
     private final PatronService patronService;
     private final Mapper<Patron, PatronDto> patronMapper;
@@ -21,24 +22,24 @@ public class PatronController {
         this.patronService = patronService;
         this.patronMapper = patronMapper;
     }
-    @GetMapping("/patrons")
+    @GetMapping
     public ResponseEntity<List<Patron>> getPatrons() {
         return new ResponseEntity<>(this.patronService.getAll(), HttpStatus.OK);
     }
-    @GetMapping("/patrons/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Patron> getPatronById(@PathVariable Long id) {
         if(!this.patronService.isExists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(this.patronService.getById(id), HttpStatus.OK);
     }
-    @PostMapping("/patrons")
+    @PostMapping
     public ResponseEntity<PatronDto> addPatron(@RequestBody PatronDto patronDto) {
         Patron patron = this.patronMapper.mapFromDto(patronDto);
         Patron savedPatron = this.patronService.save(patron);
         return new ResponseEntity<>(this.patronMapper.mapToDto(savedPatron), HttpStatus.CREATED);
     }
-    @PutMapping("/patrons/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<PatronDto> updatePatron(@PathVariable Long id, @RequestBody PatronDto patronDto) {
         if(!this.patronService.isExists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -48,7 +49,7 @@ public class PatronController {
         Patron updatedPatron = this.patronService.save(patron);
         return new ResponseEntity<>(this.patronMapper.mapToDto(updatedPatron), HttpStatus.OK);
     }
-    @DeleteMapping("/patrons/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePatron(@PathVariable Long id) {
         if(!this.patronService.isExists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

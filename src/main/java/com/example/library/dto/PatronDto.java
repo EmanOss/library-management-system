@@ -18,5 +18,6 @@ public class PatronDto {
     private String name;
     private String email;
     private String phone;
-    private Set<BorrowRecord> bookPatrons = new HashSet<>();
+    private boolean canBorrow = true;
+    private Set<Long> borrowRecordsIds = new HashSet<>();
 }

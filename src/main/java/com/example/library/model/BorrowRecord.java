@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Builder
@@ -17,8 +19,11 @@ public class BorrowRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private Date borrowDate;
-    private Date returnDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "borrow_date")
+    private LocalDate borrowDate;
+    @Column(name = "return_date", columnDefinition = "DATE")
+    private LocalDate returnDate;
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;

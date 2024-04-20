@@ -1,13 +1,9 @@
 package com.example.library.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -23,6 +19,7 @@ public class Book {
     private String author;
     private int publicationYear;
     private String isbn;
-    @OneToMany(mappedBy = "book")
-    private Set<BorrowRecord> bookPatrons = new HashSet<>();
+    private boolean available;
+    @ElementCollection
+    private Set<Long> borrowRecordsIds = new HashSet<>();
 }

@@ -1,6 +1,5 @@
 package com.example.library.dto;
 
-import com.example.library.model.BorrowRecord;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +18,6 @@ public class BookDto {
     private String author;
     private int publicationYear;
     private String isbn;
-    private Set<BorrowRecord> bookPatrons = new HashSet<>();
+    private boolean available = true;
+    private Set<Long> borrowRecordsIds = new HashSet<>();
 }
