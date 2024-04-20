@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
     private final Mapper<Book,BookDto> bookMapper;
@@ -20,28 +21,39 @@ public class BookController {
         this.bookService = bookService;
         this.bookMapper = bookMapper;
     }
-    @GetMapping("/books")
+    @GetMapping
     public ResponseEntity<List<Book>> getBooks() {
-        return new ResponseEntity<>(this.bookService.getAllBooks(), HttpStatus.OK);
+        return new ResponseEntity<>(this.bookService.getAll(), HttpStatus.OK);
     }
-    @GetMapping("/books/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
-        return new ResponseEntity<>(this.bookService.getBookById(id), HttpStatus.OK);
+        if(!this.bookService.isExists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(this.bookService.getById(id), HttpStatus.OK);
     }
-    @PostMapping("/books")
+    @PostMapping
     public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto) {
-        Book book = this.bookMapper.mapFrom(bookDto);
-        Book savedBook = this.bookService.saveBook(book);
-        return new ResponseEntity<>(this.bookMapper.mapTo(savedBook), HttpStatus.CREATED);
+        Book book = this.bookMapper.mapFromDto(bookDto);
+        Book savedBook = this.bookService.save(book);
+        return new ResponseEntity<>(this.bookMapper.mapToDto(savedBook), HttpStatus.CREATED);
     }
-    @PutMapping("/books/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BookDto> updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
         if(!this.bookService.isExists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         bookDto.setId(id);
-        Book book = this.bookMapper.mapFrom(bookDto);
-        Book updatedBook = this.bookService.saveBook(book);
-        return new ResponseEntity<>(this.bookMapper.mapTo(updatedBook), HttpStatus.OK);
+        Book book = this.bookMapper.mapFromDto(bookDto);
+        Book updatedBook = this.bookService.save(book);
+        return new ResponseEntity<>(this.bookMapper.mapToDto(updatedBook), HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        if(!this.bookService.isExists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        this.bookService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

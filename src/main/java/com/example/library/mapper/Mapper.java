@@ -1,8 +1,8 @@
 package com.example.library.mapper;
 
-public interface Mapper<A, B> {
+public interface Mapper<Entity, Dto> {
 
-    B mapTo(A a);
+    Dto mapToDto(Entity entity);
 
-    A mapFrom(B b);
+    Entity mapFromDto(Dto dto);
 }

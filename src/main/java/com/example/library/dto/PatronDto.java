@@ -1,5 +1,6 @@
 package com.example.library.dto;
 
+import com.example.library.model.BorrowRecord;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +13,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BookDto {
+public class PatronDto {
     private Long id;
-    private String title;
-    private String author;
-    private int publicationYear;
-    private String isbn;
-    private boolean available = true;
+    private String name;
+    private String email;
+    private String phone;
+    private boolean canBorrow = true;
     private Set<Long> borrowRecordsIds = new HashSet<>();
 }
