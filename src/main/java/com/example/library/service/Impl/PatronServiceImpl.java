@@ -23,7 +23,7 @@ public class PatronServiceImpl implements PatronService {
 
     @Override
     public Patron getById(Long id) {
-        return this.patronRepository.findById(id).orElse(null);
+        return this.patronRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Patron not found"));
     }
 
     @Override
@@ -46,6 +46,11 @@ public class PatronServiceImpl implements PatronService {
 
     @Override
     public void delete(Long id) {
+        try{
+            this.getById(id);
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Patron not found");
+        }
         this.patronRepository.deleteById(id);
     }
 

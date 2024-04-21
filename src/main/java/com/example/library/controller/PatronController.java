@@ -29,9 +29,6 @@ public class PatronController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Patron> getPatronById(@PathVariable Long id) {
-        if(!this.patronService.isExists(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(this.patronService.getById(id), HttpStatus.OK);
     }
     @PostMapping
@@ -47,9 +44,6 @@ public class PatronController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePatron(@PathVariable Long id) {
-        if(!this.patronService.isExists(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         this.patronService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
