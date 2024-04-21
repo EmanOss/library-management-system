@@ -28,9 +28,6 @@ public class BookController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
-        if(!this.bookService.isExists(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(this.bookService.getById(id), HttpStatus.OK);
     }
     @PostMapping
@@ -41,19 +38,11 @@ public class BookController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<BookDto> updateBook(@PathVariable Long id, @Valid @RequestBody BookDto bookDto) {
-        if(!this.bookService.isExists(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        bookDto.setId(id);
-        Book book = this.bookMapper.mapFromDto(bookDto);
-        Book updatedBook = this.bookService.save(book);
+        Book updatedBook = this.bookService.update(id, bookDto);
         return new ResponseEntity<>(this.bookMapper.mapToDto(updatedBook), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-        if(!this.bookService.isExists(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         this.bookService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
