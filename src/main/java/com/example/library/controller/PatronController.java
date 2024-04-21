@@ -42,12 +42,7 @@ public class PatronController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<PatronDto> updatePatron(@PathVariable Long id, @Valid @RequestBody PatronDto patronDto) {
-        if(!this.patronService.isExists(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        patronDto.setId(id);
-        Patron patron = this.patronMapper.mapFromDto(patronDto);
-        Patron updatedPatron = this.patronService.save(patron);
+        Patron updatedPatron = this.patronService.update(id, patronDto);
         return new ResponseEntity<>(this.patronMapper.mapToDto(updatedPatron), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
