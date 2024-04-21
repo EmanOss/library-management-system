@@ -28,9 +28,6 @@ public class BookController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
-        if(!this.bookService.isExists(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(this.bookService.getById(id), HttpStatus.OK);
     }
     @PostMapping
@@ -46,9 +43,6 @@ public class BookController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-        if(!this.bookService.isExists(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         this.bookService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
