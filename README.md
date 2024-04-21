@@ -77,6 +77,10 @@ An API to assit librarians manage books, patrons, and borrowing records.
   ```
 
 # Endpoints
+**Base Url**
+```
+http://localhost:8080
+```
 ## Book Endpoints
 - GET /api/books: Retrieve a list of all books.
 - GET /api/books/{id}: Retrieve details of a specific book by ID.
@@ -92,6 +96,7 @@ An API to assit librarians manage books, patrons, and borrowing records.
 ## Borrow Record Endpoints
 - POST /api/borrow/{bookId}/patron/{patronId}: Allow a patron to borrow a book.
 - PUT /api/return/{bookId}/patron/{patronId}: Record the return of a borrowed book by a patron.
+- GET /record/{id}: Retrieve details of a specific borrowing record by ID.
 
 # Future Features
 - Integration testing
